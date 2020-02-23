@@ -10,8 +10,6 @@
 'use strict';
 const todo = require('todo');
 
-//console.log(todo.list());
-
 module.exports = (robot) => {
 
 // respond -> ボット名の呼び出しに反応
@@ -34,10 +32,20 @@ robot.respond(/del (.+)/i, (msg) => {
 });
 
 robot.respond(/list/i, (msg) => {
-  msg.send('未完了のタスクは' + todo.list().length + '個あります\n' + todo.list().join('\n'));
+  const list = todo.list();
+  if(list.length === 0){
+    msg.send('未完了のタスクはありません');
+  }else{
+    msg.send('未完了のタスクは' + list.length + '個あります\n' + list.join('\n'));
+  }
 });
 robot.respond(/donelist/i, (msg) => {
-  msg.send('終了したタスクは' + todo.doneList().length + '個あります\n' + todo.doneList().join('\n'));
+  const doneList = todo.doneList();
+  if(doneList.length === 0){
+    msg.send('完了したタスクはありません');
+  }else{
+    msg.send('終了したタスクは' + doneList.length + '個あります\n' + doneList.join('\n'));
+  }
 });
 
 }
